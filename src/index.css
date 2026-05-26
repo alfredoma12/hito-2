@@ -1,0 +1,129 @@
+:root {
+  --bg:         #f7f5f0;
+  --bg2:        #eeeae2;
+  --surface:    #ffffff;
+  --accent:     #c8532a;
+  --accent-h:   #a83f1c;
+  --accent-lt:  #f4e8e2;
+  --text:       #1a1714;
+  --text-2:     #5c564e;
+  --text-3:     #9c958c;
+  --border:     #e0dbd2;
+  --green:      #2d7a4f;
+  --green-lt:   #e3f3ec;
+  --radius-sm:  6px;
+  --radius:     12px;
+  --radius-lg:  20px;
+  --shadow:     0 2px 16px rgba(26,23,20,0.08);
+  --shadow-lg:  0 8px 40px rgba(26,23,20,0.14);
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --nav-h:      64px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+a  { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+input, select, textarea {
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  background: var(--surface);
+  color: var(--text);
+  width: 100%;
+  transition: border-color .18s;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.tag {
+  display: inline-flex; align-items: center;
+  font-size: 11px; font-weight: 600; font-family: var(--font-display);
+  letter-spacing: .06em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 99px;
+}
+.tag-accent { background: var(--accent-lt); color: var(--accent); }
+.tag-green  { background: var(--green-lt);  color: var(--green);  }
+.tag-muted  { background: var(--bg2);       color: var(--text-2); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--font-display); font-size: 14px; font-weight: 600;
+  padding: 11px 24px; border-radius: var(--radius-sm);
+  transition: all .18s; cursor: pointer; border: none;
+  letter-spacing: .02em;
+}
+.btn-primary {
+  background: var(--accent); color: #fff;
+}
+.btn-primary:hover { background: var(--accent-h); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(200,83,42,.35); }
+.btn-outline {
+  background: transparent; color: var(--accent);
+  border: 1.5px solid var(--accent);
+}
+.btn-outline:hover { background: var(--accent-lt); }
+.btn-ghost {
+  background: transparent; color: var(--text-2);
+  border: 1.5px solid var(--border);
+}
+.btn-ghost:hover { background: var(--bg2); color: var(--text); }
+.btn-sm { padding: 7px 16px; font-size: 13px; }
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+.form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+.form-group label { font-size: 13px; font-weight: 500; color: var(--text-2); }
+.form-error { font-size: 12px; color: var(--accent); margin-top: 4px; }
+
+.spinner {
+  width: 36px; height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  margin: 0 auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.page-enter {
+  animation: fadeUp .32s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.empty-state {
+  text-align: center; padding: 64px 24px;
+  color: var(--text-3);
+}
+.empty-state h3 { font-family: var(--font-display); font-size: 20px; color: var(--text-2); margin-bottom: 8px; }
+
+.alert {
+  padding: 12px 16px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 500; margin-bottom: 16px;
+}
+.alert-error   { background: #fef2f0; color: var(--accent); border: 1px solid #f5c8bc; }
+.alert-success { background: var(--green-lt); color: var(--green); border: 1px solid #b8deca; }

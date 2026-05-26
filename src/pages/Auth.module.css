@@ -1,0 +1,25 @@
+.page {
+  min-height: calc(100vh - var(--nav-h));
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px 24px;
+  background: var(--bg);
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  width: 100%; max-width: 420px;
+  box-shadow: var(--shadow);
+}
+.header { text-align: center; margin-bottom: 28px; }
+.logoLink {
+  display: inline-block; margin-bottom: 20px;
+  font-family: var(--font-display); font-size: 16px; font-weight: 700;
+  color: var(--accent);
+}
+.title { font-family: var(--font-display); font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+.sub   { font-size: 14px; color: var(--text-3); }
+.switchText { text-align: center; font-size: 13px; color: var(--text-3); margin-top: 20px; }
+.switchLink { color: var(--accent); font-weight: 500; }
+.switchLink:hover { text-decoration: underline; }
