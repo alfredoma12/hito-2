@@ -4,6 +4,9 @@ import { useFetch } from '../hooks';
 import { productService } from '../services/api';
 import styles from './MyProducts.module.css';
 
+// 🚀 Definimos la URL base de tu backend en Render
+const BACKEND_URL = 'https://backend-69cg.onrender.com';
+
 const MOCK = [
   { id: 1, title: 'Bicicleta de montaña', price: 120000, status: 'active',   cover_image: null },
   { id: 3, title: 'Silla ergonómica',      price: 85000,  status: 'active',   cover_image: null },
@@ -33,6 +36,15 @@ export default function MyProducts() {
   const formatPrice = (n) =>
     new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(n);
 
+  // ✅ Función auxiliar para corregir la ruta de la imagen
+  const getImageUrl = (url) => {
+    if (!url) return null;
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
+    }
+    return `${BACKEND_URL}${url}`;
+  };
+
   return (
     <main className={`page-enter ${styles.page}`}>
       <div className="container">
@@ -45,7 +57,7 @@ export default function MyProducts() {
         </div>
 
         {loading && <div style={{ padding: '60px 0' }}><div className="spinner" /></div>}
-        {error   && <div className="alert alert-error">Error al cargar tus publicaciones.</div>}
+        {error    && <div className="alert alert-error">Error al cargar tus publicaciones.</div>}
 
         {!loading && products.length === 0 && (
           <div className="empty-state">
@@ -60,7 +72,8 @@ export default function MyProducts() {
             <div key={product.id} className={styles.row}>
               <div className={styles.imgThumb}>
                 {product.cover_image
-                  ? <img src={product.cover_image} alt={product.title} />
+                  // ✅ CORREGIDO: Ahora pasa a través de getImageUrl para apuntar a Render
+                  ? <img src={getImageUrl(product.cover_image)} alt={product.title} />
                   : <span>📦</span>
                 }
               </div>
