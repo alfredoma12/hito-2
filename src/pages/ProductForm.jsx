@@ -34,7 +34,7 @@ export default function ProductForm() {
     fd.append('price',       values.price);
     fd.append('stock',       values.stock || 1);
     fd.append('category_id', values.category_id);
-    if (values.image) fd.append('images', values.image);
+    if (values.image) fd.append('image', values.image);
 
     if (isEdit) {
       await productService.update(id, fd);
@@ -57,7 +57,6 @@ export default function ProductForm() {
       .catch(() => {});
   }, []);
 
-  // Si es edición, cargar datos del producto
   useEffect(() => {
     if (!isEdit) return;
     productService.getById(id)
@@ -96,7 +95,6 @@ export default function ProductForm() {
 
           <form onSubmit={handleSubmit} noValidate className={styles.form} encType="multipart/form-data">
 
-            {/* Imagen */}
             <div className={styles.imageArea}>
               <label htmlFor="image" className={styles.imageLabel}>
                 {preview
@@ -107,7 +105,6 @@ export default function ProductForm() {
               <input id="image" type="file" name="image" accept="image/*" onChange={handleImageChange} className={styles.fileInput} />
             </div>
 
-            {/* Campos */}
             <div className={styles.fields}>
               <div className="form-group">
                 <label>Título *</label>
