@@ -2,23 +2,30 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import styles from './ProductCard.module.css';
 
-/**
- * ProductCard — componente reutilizable para mostrar un producto.
- * Props:
- *  - product: { id, title, price, cover_image, category, seller }
- *  - showAddCart?: boolean (default true)
- */
+// 🚀 Definimos la URL base de tu backend en Render
+const BACKEND_URL = 'https://backend-69cg.onrender.com';
+
 export default function ProductCard({ product, showAddCart = true }) {
   const { addItem } = useCart();
 
   const formatPrice = (n) =>
     new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(n);
 
+  // ✅ CORRECCIÓN: Si la imagen es una ruta relativa (empieza con /uploads), le pegamos la URL de Render
+  const getImageUrl = (url) => {
+    if (!url) return null;
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url; // Si ya viene completa (ej: una URL externa), la dejamos igual
+    }
+    return `${BACKEND_URL}${url}`; // Si viene como /uploads/..., le sumamos el dominio de Render
+  };
+
   return (
     <article className={`card ${styles.card}`}>
       <Link to={`/productos/${product.id}`} className={styles.imgWrap}>
         {product.cover_image ? (
-          <img src={product.cover_image} alt={product.title} className={styles.img} />
+          // ✅ Usamos la función correctora aquí
+          <img src={getImageUrl(product.cover_image)} alt={product.title} className={styles.img} />
         ) : (
           <div className={styles.imgPlaceholder}>
             <span>📦</span>
