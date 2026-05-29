@@ -6,6 +6,9 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import styles from './ProductDetail.module.css';
 
+// 🚀 Definimos la URL base de tu backend en Render
+const BACKEND_URL = 'https://backend-69cg.onrender.com';
+
 const MOCK_DETAIL = {
   id: 1,
   title: 'Bicicleta de montaña 29"',
@@ -45,6 +48,20 @@ export default function ProductDetail() {
     setTimeout(() => setAdded(false), 2000);
   };
 
+  // ✅ Función auxiliar para asegurar que la imagen apunte a Render
+  const getImageUrl = () => {
+    // Primero revisamos si hay algo en el arreglo de imágenes
+    let imgPath = prod.images?.[0] || prod.cover_image;
+    
+    if (!imgPath) return null;
+    if (imgPath.startsWith('http://') || imgPath.startsWith('https://')) {
+      return imgPath;
+    }
+    return `${BACKEND_URL}${imgPath}`;
+  };
+
+  const imageSrc = getImageUrl();
+
   if (loading) return <div style={{ padding: '80px 0' }}><div className="spinner" /></div>;
   if (error)   return <div className="container" style={{ padding: '64px 0' }}><p>Error al cargar el producto.</p></div>;
 
@@ -59,10 +76,10 @@ export default function ProductDetail() {
           <span>{prod.title}</span>
         </nav>
 
-        {/* Imagen */}
         <div className={styles.gallery}>
-          {prod.images?.length > 0 ? (
-            <img src={prod.images[0]} alt={prod.title} className={styles.mainImg} />
+          {/* ✅ CORREGIDO: Ahora usa imageSrc apuntando directamente a Render */}
+          {imageSrc ? (
+            <img src={imageSrc} alt={prod.title} className={styles.mainImg} />
           ) : (
             <div className={styles.imgPlaceholder}>
               <span>📦</span>
@@ -70,7 +87,6 @@ export default function ProductDetail() {
           )}
         </div>
 
-        {/* Info */}
         <div className={styles.info}>
           {prod.category && (
             <span className="tag tag-muted">{prod.category.name}</span>
@@ -106,7 +122,6 @@ export default function ProductDetail() {
             )}
           </div>
 
-          {/* Vendedor */}
           <div className={styles.sellerCard}>
             <div className={styles.sellerAvatar}>{prod.seller?.name?.[0] ?? 'V'}</div>
             <div>
